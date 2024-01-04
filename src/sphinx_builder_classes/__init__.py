@@ -81,10 +81,10 @@ def setup(app: Sphinx) -> None:
     """Setup Sphinx extension."""
     app.connect("builder-inited", setup_transforms)
     app.add_config_value(
-        "builder_ignore_classes", DEFAULT_BUILDER_IGNORE_CLASSES, "env", [dict]
+        "sphinx_builder_classes_builders", DEFAULT_BUILDER_IGNORE_CLASSES, "env", [dict]
     )
     app.add_config_value(
-        "format_ignore_classes", DEFAULT_FORMAT_IGNORE_CLASSES, "env", [dict]
+        "sphinx_builder_classes_formats", DEFAULT_FORMAT_IGNORE_CLASSES, "env", [dict]
     )
 
 

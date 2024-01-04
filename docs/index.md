@@ -67,3 +67,18 @@ For this example configuration ([](#config-format)), any element with the class
 I won't appear in any HTML-like outputs, e.g. dirhtml or html builders!
 :::
 ```
+
+## Example
+
+The source code for this page contains two code blocks. Only one should be visible below!
+
+:::{code-block} python
+:class: no-html
+
+print("Hello non-HTML builders")
+:::
+
+:::{code-block} python
+
+print("Hello HTML and non-HTML builders")
+:::

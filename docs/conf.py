@@ -15,6 +15,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx_autodoc_typehints",
     "sphinx_copybutton",
+    "sphinx_builder_classes",
 ]
 
 source_suffix = [".rst", ".md"]
@@ -43,3 +44,6 @@ nitpick_ignore = [
 ]
 
 always_document_param_types = True
+
+
+sphinx_builder_classes_builders = {"html": ["no-html"]}

@@ -1,0 +1,13 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 2023.12.21
+_src_path: gh:scientific-python/cookie
+backend: hatch
+email: goosey15@gmail.xom
+full_name: Angus Hollands
+license: MIT
+org: agoose77
+project_name: sphinx-builder-classes
+project_short_description:
+  Sphinx extension to hide content based upon the active builder
+url: https://github.com/agoose77/sphinx-builder-classes
+vcs: true

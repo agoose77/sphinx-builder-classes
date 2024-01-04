@@ -39,15 +39,6 @@ repos:
         types_or: [yaml, html, css, scss, javascript, json]
         args: [--prose-wrap=always]
 
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.17
-    hooks:
-      - id: mdformat
-        args: [--number, --wrap=88]
-        additional_dependencies:
-          - mdformat-gfm
-          - mdformat-myst
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: "v0.1.9"
     hooks:

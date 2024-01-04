@@ -23,34 +23,47 @@ In order to use this extension, you must define a set of class names to be
 hidden by a given builder by setting `sphinx_builder_classes_builders`, e.g. in
 your conf.py:
 
-:::{code-block} python :name: config-name
+:::{code-block} python
+:name: config-name
 
-sphinx_builder_classes_builders = { "latex": ["no-latex"], "dirhtml":
-["no-dirhtml"], "html": ["no-html"] } :::
+sphinx_builder_classes_builders = {
+    "latex": ["no-latex"],
+    "dirhtml": ["no-dirhtml"],
+    "html": ["no-html"]
+}
+:::
 
 For this example configuration ([](#config-name)), any element with the class
 `"no-latex"` will be hidden for LaTeX builds, e.g.
 
 ```markdown
-:::{note} :class: no-latex
+:::{note}
+:class: no-latex
 
-I won't appear in LaTeX output! :::
+I won't appear in LaTeX output!
+:::
 ```
 
 You can also elect to hide an a set of classes for a particular output format,
 instead of builder, by setting `sphinx_builder_classes_formats`, e.g. in your
 conf.py:
 
-:::{code-block} python :name: config-format
+:::{code-block} python
+:name: config-format
 
-sphinx_builder_classes_formats = { "latex": ["no-fmt-latex"], "html":
-["no-fmt-html"] } :::
+sphinx_builder_classes_formats = {
+    "latex": ["no-fmt-latex"],
+    "html": ["no-fmt-html"]
+}
+:::
 
 For this example configuration ([](#config-format)), any element with the class
 `"no-fmt-html"` will be hidden for HTML-format builds, e.g.
 
 ```markdown
-:::{note} :class: no-fmt-html
+:::{note}
+:class: no-fmt-html
 
-I won't appear in any HTML-like outputs, e.g. dirhtml or html builders! :::
+I won't appear in any HTML-like outputs, e.g. dirhtml or html builders!
+:::
 ```

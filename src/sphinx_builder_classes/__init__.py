@@ -11,7 +11,6 @@ from typing import Any
 
 from docutils import nodes
 from sphinx.application import Sphinx
-from sphinx.config import Config
 from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.docutils import SphinxTranslator
 
@@ -23,11 +22,9 @@ __all__ = ["__version__"]
 class HiddenNode(nodes.Element):
     """A node that will not be rendered."""
 
-    def __init__(self, rawsource: str = "", *children: nodes.Node, **attributes: Any):
-        super().__init__(rawsource, *children, **attributes)
-
     @classmethod
     def register(cls, app: Sphinx) -> None:
+        """Register a special `HiddenNode` element that does not produce any rendered output."""
         app.add_node(
             cls,
             override=True,
@@ -39,7 +36,8 @@ class HiddenNode(nodes.Element):
         )
 
 
-def visit_HiddenNode(self: SphinxTranslator, node: nodes.Element) -> None:  # noqa: ARG001
+def visit_HiddenNode(self: SphinxTranslator, node: nodes.Element) -> None:  # noqa: ARG001, pylint: disable=invalid-name
+    """No-op visitor for the special `HiddenNode` element."""
     raise nodes.SkipNode
 
 
@@ -48,9 +46,14 @@ class HideNodesTransform(SphinxPostTransform):
 
     default_priority = 400
 
-    def apply(self, **kwargs: Any) -> None:  # noqa: ARG002
+    def run(self, **kwargs: Any) -> None:  # noqa: ARG002
+        """Replace nodes tagged with builder-specific classes with a special `HiddenNode`."""
         builder_ignore_classes = self.app.config["builder_ignore_classes"]
-        ignore_classes = builder_ignore_classes.get(self.app.builder.name, set())
+        ignore_classes = set(builder_ignore_classes.get(self.app.builder.name, set()))
+
+        format_ignore_classes = self.app.config["format_ignore_classes"]
+        ignore_classes |= set(format_ignore_classes.get(self.app.builder.format, set()))
+
         for node in self.document.traverse(nodes.Element):
             node_classes = set(node["classes"])
             if node_classes & ignore_classes:
@@ -65,21 +68,27 @@ DEFAULT_BUILDER_IGNORE_CLASSES = {
     ]
 }
 
+DEFAULT_FORMAT_IGNORE_CLASSES = {
+    "latex": [
+        "dropdown",
+        "toggle",
+        "margin",
+    ]
+}
+
 
 def setup(app: Sphinx) -> None:
+    """Setup Sphinx extension."""
     app.connect("builder-inited", setup_transforms)
-    app.connect("config-inited", setup_ignore_classes)
     app.add_config_value(
         "builder_ignore_classes", DEFAULT_BUILDER_IGNORE_CLASSES, "env", [dict]
     )
+    app.add_config_value(
+        "format_ignore_classes", DEFAULT_FORMAT_IGNORE_CLASSES, "env", [dict]
+    )
 
 
-def setup_ignore_classes(app: Sphinx, config: Config) -> None:  # noqa: ARG001
-    config["builder_ignore_classes"] = {
-        k: set(v) for k, v in config["builder_ignore_classes"].items()
-    }
-
-
-def setup_transforms(app: Sphinx) -> None:
+def setup_transforms(app: Sphinx) -> None:  # pylint: disable=unused-argument
+    """Setup custom Sphinx transformations, and register custom nodes."""
     app.add_post_transform(HideNodesTransform)
     HiddenNode.register(app)

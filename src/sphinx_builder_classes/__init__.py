@@ -48,10 +48,10 @@ class HideNodesTransform(SphinxPostTransform):
 
     def run(self, **kwargs: Any) -> None:  # noqa: ARG002
         """Replace nodes tagged with builder-specific classes with a special `HiddenNode`."""
-        builder_ignore_classes = self.app.config["builder_ignore_classes"]
+        builder_ignore_classes = self.app.config["sphinx_builder_classes_builders"]
         ignore_classes = set(builder_ignore_classes.get(self.app.builder.name, set()))
 
-        format_ignore_classes = self.app.config["format_ignore_classes"]
+        format_ignore_classes = self.app.config["sphinx_builder_classes_formats"]
         ignore_classes |= set(format_ignore_classes.get(self.app.builder.format, set()))
 
         for node in self.document.traverse(nodes.Element):

@@ -25,3 +25,26 @@
 [rtd-link]:                 https://sphinx-builder-classes.readthedocs.io/en/latest/?badge=latest
 
 <!-- prettier-ignore-end -->
+
+## Usage
+
+This extension defines two Sphinx configuration options that can be set to hide Sphinx nodes with specific class names, e.g.
+```python
+sphinx_builder_classes_formats = {
+  "html": [
+    "no-html", "please-no-html" 
+  ]
+}
+```
+
+```markdown
+:::{code-cell}
+:class: no-html
+
+1 + 2
+:::
+```
+
+The `sphinx_builder_classes_formats` controls the mapping of builder _format_ to class names, whilst `sphinx_builder_classes_builders` maps from builder _name_ to class names. 
+
+For use with code-cells, one can also use the `<TAG>` -> `tag_<TAG>` transform performed by MyST-NB to use tags to hide cells instead of their classes.
